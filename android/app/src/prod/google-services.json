@@ -1,0 +1,47 @@
+{
+    "project_info":  {
+                         "project_number":  "1017778655111",
+                         "firebase_url":  "https://focusflow-ai-2eb25-default-rtdb.firebaseio.com",
+                         "project_id":  "focusflow-ai-2eb25",
+                         "storage_bucket":  "focusflow-ai-2eb25.firebasestorage.app"
+                     },
+    "client":  [
+                   {
+                       "client_info":  {
+                                           "mobilesdk_app_id":  "1:1017778655111:android:04b4457527e0102a954d22",
+                                           "android_client_info":  {
+                                                                       "package_name":  "com.sr.todo"
+                                                                   }
+                                       },
+                       "oauth_client":  [
+                                            {
+                                                "client_id":  "1017778655111-em2brq7l8gagurlgg2r5tu96frpgtlvg.apps.googleusercontent.com",
+                                                "client_type":  3
+                                            }
+                                        ],
+                       "api_key":  [
+                                       {
+                                           "current_key":  "AIzaSyDBbJ4GvUizADaHDaFyEvbKhG2CZTGWJgM"
+                                       }
+                                   ],
+                       "services":  {
+                                        "appinvite_service":  {
+                                                                  "other_platform_oauth_client":  [
+                                                                                                      {
+                                                                                                          "client_id":  "1017778655111-em2brq7l8gagurlgg2r5tu96frpgtlvg.apps.googleusercontent.com",
+                                                                                                          "client_type":  3
+                                                                                                      },
+                                                                                                      {
+                                                                                                          "client_id":  "1017778655111-ppmfjp19descjb194uclfahgmkgc6p61.apps.googleusercontent.com",
+                                                                                                          "client_type":  2,
+                                                                                                          "ios_info":  {
+                                                                                                                           "bundle_id":  "com.example.aiStudyPlanner"
+                                                                                                                       }
+                                                                                                      }
+                                                                                                  ]
+                                                              }
+                                    }
+                   }
+               ],
+    "configuration_version":  "1"
+}
