@@ -1,11 +1,11 @@
 import 'package:data/di/local_di.dart';
 import 'package:data/helper/app_local_database_helper.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_clean_architecture/main.dart';
+import 'package:kick_stack/main.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  testWidgets('App starts on todo home route', (WidgetTester tester) async {
+  testWidgets('App starts on KickStack home route', (WidgetTester tester) async {
     final db = await AppLocalDatabase.create();
     await tester.pumpWidget(
       ProviderScope(

@@ -1,39 +1,57 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Data Layer
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+The data package owns network, local database, secure storage, model mapping, and repository implementations.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+## Important Files
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
+```text
+core/config/network_config.dart       Base URL, WebSocket URL, flavor, SSL fingerprints
+core/app/app_http_override.dart       Dev-only certificate override
+remote/api_service.dart               Retrofit REST endpoints
+remote/utils/safe_api_call.dart       Network error wrapping
+helper/app_local_database_helper.dart SQLite database and tables
+helper/secure_storage_helper.dart     Token/preference storage helper
+repository/starter_repository_impl.dart REST repository implementation
+repository/task_repository_impl.dart  SQLite repository implementation
+repository/live_update_repository_impl.dart REST initial live-list repository
+source/starter/network                REST remote data source
+source/live_update/network            Live update REST seed data source
+source/task/local                     SQLite local data source
+source/task/network                   Task REST data source example
 ```
 
-## Additional information
+## API Flow
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+```text
+ApiService
+-> RemoteDataSource
+-> RepositoryImpl
+-> domain Repository contract
+-> domain UseCase
+-> app ViewModel
+-> UI
+```
+
+## Local DB Flow
+
+```text
+AppLocalDatabase
+-> TaskLocalDataSourceImpl
+-> TaskRepositoryImpl
+-> TaskRepository
+-> UseCase
+-> ViewModel stream
+-> UI
+```
+
+## Generation
+
+Run from this `data` folder after changing Retrofit or JSON files:
+
+```bash
+dart run build_runner build --delete-conflicting-outputs
+```
+
+## SSL
+
+Set `NetworkConfig.certificateFingerprints` per flavor. Production should use real SHA-256 certificate fingerprints and should not rely on `AppHttpOverrides`.

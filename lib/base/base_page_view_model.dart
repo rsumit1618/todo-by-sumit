@@ -1,19 +1,20 @@
 import 'package:domain/constant/error_info.dart';
 import 'package:domain/errors/app_error.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_clean_architecture/base/base_view_model.dart';
-import 'package:flutter_clean_architecture/utils/extentions/steam_extension.dart';
+import 'package:kick_stack/base/base_view_model.dart';
+import 'package:kick_stack/utils/extentions/steam_extension.dart';
 import 'package:rxdart/rxdart.dart';
 
 class BasePageViewModel extends BaseViewModel {
-
   final PublishSubject<AppError> _error = PublishSubject<AppError>();
   final PublishSubject<String> _toast = PublishSubject<String>();
 
-  final PublishSubject<SuccessToastData> _successSubject = PublishSubject<SuccessToastData>();
+  final PublishSubject<SuccessToastData> _successSubject =
+      PublishSubject<SuccessToastData>();
   Stream<SuccessToastData> get successStream => _successSubject.stream;
 
-  final PublishSubject<StringError> _errorStringReq = PublishSubject<StringError>();
+  final PublishSubject<StringError> _errorStringReq =
+      PublishSubject<StringError>();
   Stream<StringError> get errorStringStream => _errorStringReq.stream;
 
   bool _isLoading = false;
@@ -50,8 +51,13 @@ class BasePageViewModel extends BaseViewModel {
     _toast.safeSinkAdd(message);
   }
 
-  void showStringError(String message, {ErrorColor errorColor = ErrorColor.red}) {
-    _errorStringReq.safeSinkAdd(StringError(message: message, errorColor: errorColor));
+  void showStringError(
+    String message, {
+    ErrorColor errorColor = ErrorColor.red,
+  }) {
+    _errorStringReq.safeSinkAdd(
+      StringError(message: message, errorColor: errorColor),
+    );
   }
 
   @override
@@ -62,7 +68,6 @@ class BasePageViewModel extends BaseViewModel {
   }
 }
 
-
 class SuccessToastData {
   final String title;
   final String desc;
@@ -70,7 +75,7 @@ class SuccessToastData {
   SuccessToastData({this.title = '', this.desc = ''});
 }
 
-class StringError{
+class StringError {
   final String message;
   final ErrorColor errorColor;
 

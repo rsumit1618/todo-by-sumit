@@ -8,7 +8,8 @@ class BaseRequestModel {
 
   BaseRequestModel({required this.baseData});
 
-  factory BaseRequestModel.fromJson(Map<String, dynamic> json) => _$BaseRequestModelFromJson(json);
+  factory BaseRequestModel.fromJson(Map<String, dynamic> json) =>
+      _$BaseRequestModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$BaseRequestModelToJson(this);
 }

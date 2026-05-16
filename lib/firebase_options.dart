@@ -1,7 +1,8 @@
 import 'package:data/core/config/flavors.dart';
 import 'package:data/core/config/network_config.dart';
 import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
-import 'package:flutter/foundation.dart' show defaultTargetPlatform, TargetPlatform;
+import 'package:flutter/foundation.dart'
+    show defaultTargetPlatform, TargetPlatform;
 
 class DefaultFirebaseOptions {
   static bool get isConfigured {
@@ -19,7 +20,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return _getAndroidConfig();
       default:
-        throw UnsupportedError('DefaultFirebaseOptions are not supported for this platform.');
+        throw UnsupportedError(
+          'DefaultFirebaseOptions are not supported for this platform.',
+        );
     }
   }
 
@@ -45,14 +48,15 @@ class DefaultFirebaseOptions {
     }
   }
 
-  //  Android Firebase Configurations
+  // Android Firebase configurations.
+  // Replace these values with output from FlutterFire CLI when enabling sync.
   static const FirebaseOptions androidShared = FirebaseOptions(
-    apiKey: 'AIzaSyDBbJ4GvUizADaHDaFyEvbKhG2CZTGWJgM',
-    appId: '1:1017778655111:android:04b4457527e0102a954d22',
-    messagingSenderId: '1017778655111',
-    projectId: 'focusflow-ai-2eb25',
-    databaseURL: 'https://focusflow-ai-2eb25-default-rtdb.firebaseio.com',
-    storageBucket: 'focusflow-ai-2eb25.firebasestorage.app',
+    apiKey: '',
+    appId: '',
+    messagingSenderId: '',
+    projectId: '',
+    databaseURL: '',
+    storageBucket: '',
   );
 
   static const FirebaseOptions androidDev = androidShared;
@@ -60,7 +64,6 @@ class DefaultFirebaseOptions {
   static const FirebaseOptions androidUat = androidShared;
 
   static const FirebaseOptions androidProd = androidShared;
-
 
   //  iOS Firebase Configurations
   static const FirebaseOptions iosDev = FirebaseOptions(
@@ -71,7 +74,7 @@ class DefaultFirebaseOptions {
     databaseURL: '',
     storageBucket: '',
     iosClientId: '',
-    iosBundleId: 'com.sr.todo.dev',
+    iosBundleId: 'com.sr.kickstack.dev',
   );
 
   static const FirebaseOptions iosUat = FirebaseOptions(
@@ -82,9 +85,8 @@ class DefaultFirebaseOptions {
     databaseURL: '',
     storageBucket: '',
     iosClientId: '',
-    iosBundleId: 'com.sr.todo.uat',
+    iosBundleId: 'com.sr.kickstack.uat',
   );
-
 
   static const FirebaseOptions iosProd = FirebaseOptions(
     apiKey: '',
@@ -94,7 +96,6 @@ class DefaultFirebaseOptions {
     databaseURL: '',
     storageBucket: '',
     iosClientId: '',
-    iosBundleId: 'com.sr.todo',
+    iosBundleId: 'com.sr.kickstack',
   );
-
 }

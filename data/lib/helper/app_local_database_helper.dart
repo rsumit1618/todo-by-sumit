@@ -10,7 +10,7 @@ class AppLocalDatabase {
     final directory = await getApplicationDocumentsDirectory();
     final db = sqlite3.open("${directory.path}/app.db");
     db.execute('''
-      CREATE TABLE IF NOT EXISTS todos (
+      CREATE TABLE IF NOT EXISTS tasks (
         id TEXT PRIMARY KEY,
         title TEXT NOT NULL,
         description TEXT,

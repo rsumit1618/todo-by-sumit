@@ -6,6 +6,7 @@ extension SafeSubjectAddExtn on Subject {
       this.add(data);
     }
   }
+
   void safeSinkAdd(dynamic data) {
     if (!this.isClosed) {
       this.sink.add(data);

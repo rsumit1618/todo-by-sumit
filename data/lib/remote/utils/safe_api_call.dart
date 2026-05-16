@@ -5,7 +5,6 @@ import 'package:domain/errors/network_error.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:dartz/dartz.dart';
 
-
 Future<Either<NetworkError, T>?> safeApiCall<T>(Future<T> apiCall) async {
   try {
     final originalResponse = await apiCall;
@@ -20,48 +19,69 @@ Future<Either<NetworkError, T>?> safeApiCall<T>(Future<T> apiCall) async {
     switch (throwable.runtimeType) {
       case DioException _:
         switch ((throwable as DioException).type) {
-        // TODO : Upgrade changes
-        //case DioErrorType.connectTimeout:
           case DioExceptionType.connectionTimeout:
-          //"Connection timeout with API server";
+            //"Connection timeout with API server";
             break;
           case DioExceptionType.sendTimeout:
-          //"Receive timeout exception";
+            //"Receive timeout exception";
             break;
           case DioExceptionType.receiveTimeout:
-          //"Receive timeout in connection with API server";
+            //"Receive timeout in connection with API server";
             break;
-        // TODO : Upgrade changes
           case DioExceptionType.badResponse:
-          //case DioErrorType.response:
+            //case DioErrorType.response:
             return Left(getError(apiResponse: throwable.response));
-        //"Received invalid status core: ${error.response.statusCode}";
+          //"Received invalid status core: ${error.response.statusCode}";
           case DioExceptionType.cancel:
-          //"Request to API server was cancelled"
+            //"Request to API server was cancelled"
             break;
           case DioExceptionType.unknown:
-          //case DioErrorType.other:
+            //case DioErrorType.other:
             return Left(
               NetworkError(
-                  message: "Connection to API server failed due to internet connection",
-                  httpError: 101,
-                  cause: throwable),
+                message:
+                    "Connection to API server failed due to internet connection",
+                httpError: 101,
+                cause: throwable,
+              ),
             );
           case DioExceptionType.badCertificate:
-          // TODO: Handle this case.
-            throw UnimplementedError();
+            return Left(
+              NetworkError(
+                message: "SSL certificate validation failed",
+                httpError: 495,
+                cause: throwable,
+              ),
+            );
           case DioExceptionType.connectionError:
-          // TODO: Handle this case.
-            throw UnimplementedError();
+            return Left(
+              NetworkError(
+                message: "Connection to API server failed",
+                httpError: 101,
+                cause: throwable,
+              ),
+            );
         }
 
         break;
 
       case IOException _:
-        return Left(NetworkError(message: throwable.toString(), httpError: 502, cause: throwable));
+        return Left(
+          NetworkError(
+            message: throwable.toString(),
+            httpError: 502,
+            cause: throwable,
+          ),
+        );
 
       default:
-        return Left(NetworkError(message: throwable.toString(), httpError: 502, cause: throwable));
+        return Left(
+          NetworkError(
+            message: throwable.toString(),
+            httpError: 502,
+            cause: throwable,
+          ),
+        );
     }
   }
   return null;

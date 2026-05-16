@@ -3,7 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 
 class AppTheme {
-
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
 
@@ -28,36 +27,24 @@ class AppTheme {
       filled: true,
       fillColor: AppColors.inputFill,
 
-      contentPadding: const EdgeInsets.symmetric(
-        horizontal: 16,
-        vertical: 18,
-      ),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
 
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
-        borderSide: const BorderSide(
-          color: AppColors.border,
-        ),
+        borderSide: const BorderSide(color: AppColors.border),
       ),
 
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
-        borderSide: const BorderSide(
-          color: AppColors.border,
-        ),
+        borderSide: const BorderSide(color: AppColors.border),
       ),
 
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(14),
-        borderSide: const BorderSide(
-          color: AppColors.primary,
-          width: 1.4,
-        ),
+        borderSide: const BorderSide(color: AppColors.primary, width: 1.4),
       ),
 
-      hintStyle: const TextStyle(
-        color: AppColors.textSecondary,
-      ),
+      hintStyle: const TextStyle(color: AppColors.textSecondary),
     ),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
@@ -69,14 +56,9 @@ class AppTheme {
 
         foregroundColor: Colors.white,
 
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
 
-        textStyle: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-        ),
+        textStyle: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
       ),
     ),
 
@@ -84,9 +66,7 @@ class AppTheme {
       elevation: 0,
       color: Colors.white,
       shadowColor: AppColors.shadow,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(24),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
     ),
   );
 }

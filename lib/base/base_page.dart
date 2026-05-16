@@ -3,21 +3,28 @@ import 'package:domain/constant/error_type.dart';
 import 'package:domain/errors/app_error.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_clean_architecture/base/base_page_view_model.dart';
-import 'package:flutter_clean_architecture/base/base_widget.dart';
-import 'package:flutter_clean_architecture/core/theme/app_colors.dart';
-import 'package:flutter_clean_architecture/di/view_model_provider/app/app_module.dart';
-import 'package:flutter_clean_architecture/main/app_view_model.dart';
+import 'package:kick_stack/base/base_page_view_model.dart';
+import 'package:kick_stack/base/base_widget.dart';
+import 'package:kick_stack/core/theme/app_colors.dart';
+import 'package:kick_stack/di/view_model_provider/app/app_module.dart';
+import 'package:kick_stack/main/app_view_model.dart';
 import 'package:flutter_riverpod/misc.dart';
 
 abstract class BasePage<VM extends BasePageViewModel> extends StatefulWidget {
   const BasePage({super.key});
 }
 
-abstract class BasePageState<VM extends BasePageViewModel, T extends BasePage<VM>> extends State<T> {}
+abstract class BasePageState<
+  VM extends BasePageViewModel,
+  T extends BasePage<VM>
+>
+    extends State<T> {}
 
-abstract class BaseStatefulPage<VM extends BasePageViewModel, B extends BasePage<VM>> extends BasePageState<VM, B> {
-
+abstract class BaseStatefulPage<
+  VM extends BasePageViewModel,
+  B extends BasePage<VM>
+>
+    extends BasePageState<VM, B> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   bool _isModelReadyCalled = false;
@@ -29,9 +36,7 @@ abstract class BaseStatefulPage<VM extends BasePageViewModel, B extends BasePage
     super.initState();
 
     /// Enables fullscreen edge-to-edge UI
-    SystemChrome.setEnabledSystemUIMode(
-      SystemUiMode.edgeToEdge,
-    );
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
     _setSystemUI();
   }
@@ -86,53 +91,46 @@ abstract class BaseStatefulPage<VM extends BasePageViewModel, B extends BasePage
   /// Actual Screen which load scaffold and load UI
   Widget _getLayout() {
     return BaseWidget<AppViewModel>(
-        providerBase: appViewModel,
-        onModelReady: (model) {
+      providerBase: appViewModel,
+      onModelReady: (model) {},
+      builder: (context, appModel, child) {
+        return BaseWidget<VM>(
+          providerBase: provideBase(),
+          onModelReady: _onBaseModelReady,
+          builder: (BuildContext context, VM? model, Widget? child) {
+            final scaffold = MediaQuery.removePadding(
+              context: context,
+              removeTop: true,
+              child: Scaffold(
+                key: _scaffoldKey,
+                backgroundColor: scaffoldBackgroundColor(),
+                appBar: buildAppbar(),
+                extendBodyBehindAppBar: extendBodyBehindAppBar(),
+                body: SizedBox.expand(
+                  child: _buildScaffoldBody(context, model!),
+                ),
+                drawer: buildDrawer(),
+                drawerEnableOpenDragGesture: drawerEnableOpenDragGesture(),
+                bottomNavigationBar: buildBottomNavigationBar(),
+                bottomSheet: buildBottomSheet(),
+                resizeToAvoidBottomInset: true,
+              ),
+            );
 
-        },
-        builder: (context, appModel, child) {
-          return BaseWidget<VM>(
-              providerBase: provideBase(),
-              onModelReady: _onBaseModelReady,
-              builder: (BuildContext context, VM? model, Widget? child) {
-                final scaffold = MediaQuery.removePadding(
-                  context: context,
-                  removeTop: true,
-                  child: Scaffold(
-                    key: _scaffoldKey,
-                    backgroundColor: scaffoldBackgroundColor(),
-                    appBar: buildAppbar(),
-                    extendBodyBehindAppBar:
-                    extendBodyBehindAppBar(),
-                    body: SizedBox.expand(
-                      child: _buildScaffoldBody(
-                        context,
-                        model!,
-                      ),
-                    ),
-                    drawer: buildDrawer(),
-                    drawerEnableOpenDragGesture:
-                    drawerEnableOpenDragGesture(),
-                    bottomNavigationBar:
-                    buildBottomNavigationBar(),
-                    bottomSheet: buildBottomSheet(),
-                    resizeToAvoidBottomInset: true,
-                  ),
-                );
+            if (!willPopPage()) {
+              return PopScope(
+                canPop: false,
+                onPopInvokedWithResult: (didPop, result) async {
+                  await onBackPressed(param: result);
+                },
+                child: scaffold,
+              );
+            }
 
-                if (!willPopPage()) {
-                  return PopScope(
-                    canPop: false,
-                    onPopInvokedWithResult: (didPop, result) async {
-                      await onBackPressed(param: result);
-                    },
-                    child: scaffold,
-                  );
-                }
-
-                return scaffold;
-              });
-        }
+            return scaffold;
+          },
+        );
+      },
     );
   }
 
@@ -157,6 +155,7 @@ abstract class BaseStatefulPage<VM extends BasePageViewModel, B extends BasePage
       ),
     );
   }
+
   /// Page background color
   Color scaffoldBackgroundColor() {
     return AppColors.background;
@@ -167,6 +166,7 @@ abstract class BaseStatefulPage<VM extends BasePageViewModel, B extends BasePage
   Color statusBarColor() {
     return Colors.transparent;
   }
+
   /// Building a drawer of screen
   Widget? buildDrawer() {
     return null;
@@ -256,10 +256,12 @@ abstract class BasePageViewWidget<T extends BasePageViewModel> extends Widget {
   Widget build(BuildContext context, T model);
 
   @override
-  DataProviderElement<T> createElement() => DataProviderElement<T>(this, providerBase);
+  DataProviderElement<T> createElement() =>
+      DataProviderElement<T>(this, providerBase);
 }
 
-class DataProviderElement<T extends BasePageViewModel> extends ComponentElement {
+class DataProviderElement<T extends BasePageViewModel>
+    extends ComponentElement {
   final ProviderBase providerBase;
 
   DataProviderElement(BasePageViewWidget super.widget, this.providerBase);

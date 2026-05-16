@@ -10,9 +10,10 @@ class AppHttpOverrides extends HttpOverrides {
 
     // Allow bad certificate ONLY in dev flavor and debug mode
     if (NetworkConfig.currentFlavor == ProductFlavor.dev && !kReleaseMode) {
-      client.badCertificateCallback = (X509Certificate cert, String host, int port) {
-        return true;
-      };
+      client.badCertificateCallback =
+          (X509Certificate cert, String host, int port) {
+            return true;
+          };
     }
 
     return client;

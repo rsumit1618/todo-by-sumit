@@ -7,11 +7,11 @@ These are existing issues or risks observed while analyzing the project. Treat t
 - `UserRepositoryImpl` still has unimplemented local DB and storage methods. Any code path calling them will throw.
 - `UserRepositoryDsImpl` has methods that throw `UnimplementedError`.
 - `GetUserFromNetworkUseCase` calls `getUserNameFromLocalNetwork()`, while the current implementation internally calls a local DB datasource method name. The naming is misleading.
-- Firebase Auth and Firestore providers require `Firebase.initializeApp()` before use. Guest/local todo flows were adjusted to be lazy, and future guest features should follow that pattern.
+- Firebase Auth and Firestore providers require `Firebase.initializeApp()` before use. Guest/local KickStack flows were adjusted to be lazy, and future guest features should follow that pattern.
 
 ## Medium Priority
 
-- `ApiService.g.dart` is generated code but was manually extended for prepared todo REST endpoints. Regenerating Retrofit may overwrite it unless `build_runner` is run after keeping `api_service.dart` correct.
+- `ApiService.g.dart` is generated code but was manually extended for prepared KickStack REST endpoints. Regenerating Retrofit may overwrite it unless `build_runner` is run after keeping `api_service.dart` correct.
 - `data/lib/di/usecase_di.dart` appears unused and contains only commented examples.
 - `data/lib/remote/firebase_service.dart` is empty.
 - Some app imports depend on packages that are transitive through `data`; direct root dependencies were added for common cases, but future imports should be checked.
@@ -24,9 +24,9 @@ These are existing issues or risks observed while analyzing the project. Treat t
 - Generated localization files import `intl`; keep `intl` as a direct app dependency.
 - The app uses a custom `BasePageViewWidget`/`DataProviderElement` pattern. It works, but it is uncommon and should be changed only deliberately.
 
-## Todo Feature Notes
+## KickStack Feature Notes
 
-- Guest todos are stored locally in SQLite.
+- Guest KickStacks are stored locally in SQLite.
 - Email/password and Google login are wired through domain use cases and data repositories.
-- Sync uploads local todos to Firestore under `users/{userId}/todos`.
-- REST todo endpoints are prepared in `ApiService` and `TodoNetworkDataSource`, but the active home flow does not use REST yet.
+- Sync uploads local KickStacks to Firestore under `users/{userId}/KickStacks`.
+- REST KickStack endpoints are prepared in `ApiService` and `KickStackNetworkDataSource`, but the active home flow does not use REST yet.

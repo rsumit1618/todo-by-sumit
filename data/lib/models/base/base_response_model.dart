@@ -17,16 +17,17 @@ class BaseResponseModel {
   @JsonKey(name: "id")
   final String? id;
 
-  BaseResponseModel(
-      {this.code,
-        this.content,
-        this.exceptionMessage,
-        this.message,
-        this.token,
-        this.id,
-        });
+  BaseResponseModel({
+    this.code,
+    this.content,
+    this.exceptionMessage,
+    this.message,
+    this.token,
+    this.id,
+  });
 
-  factory BaseResponseModel.fromJson(Map<String, dynamic> json) => _$BaseResponseModelFromJson(json);
+  factory BaseResponseModel.fromJson(Map<String, dynamic> json) =>
+      _$BaseResponseModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$BaseResponseModelToJson(this);
 }

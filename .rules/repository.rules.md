@@ -22,13 +22,13 @@ Repositories must not:
 - Return Firebase/Dio/SQLite-specific types.
 - Throw expected data errors.
 
-## Offline-First Todo Rules
+## Offline-First KickStack Rules
 
-- Guest todo CRUD uses local SQLite.
+- Guest KickStack CRUD uses local SQLite.
 - Firestore must not be constructed or called for guest-only local reads.
 - Sync requires a logged-in user id.
 - Local records should be marked unsynced after local edits.
-- Sync should upload local todos, then refresh local storage from Firestore.
+- Sync should upload local KickStacks, then refresh local storage from Firestore.
 
 ## Lazy Provider Rule
 

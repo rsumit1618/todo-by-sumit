@@ -1,6 +1,5 @@
-
 import 'package:domain/errors/app_error.dart';
-import 'package:flutter_clean_architecture/utils/enums.dart';
+import 'package:kick_stack/utils/enums.dart';
 
 class Resource<T> {
   final Status status;
@@ -18,16 +17,10 @@ class Resource<T> {
   }
 
   static Resource<T> loading<T>({T? data}) {
-    return Resource<T>._(
-      data: data,
-      status: Status.LOADING,
-    );
+    return Resource<T>._(data: data, status: Status.LOADING);
   }
 
   static Resource<T> none<T>() {
-    return Resource<T>._(
-      data: null,
-      status: Status.NONE,
-    );
+    return Resource<T>._(data: null, status: Status.NONE);
   }
 }

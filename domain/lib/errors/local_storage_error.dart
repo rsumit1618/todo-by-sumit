@@ -8,7 +8,9 @@ class LocalStorageError extends BaseError {
     required String message,
     required int localStorageError,
     required super.cause,
-  }) : super(error: ErrorInfo(message: message, code: localStorageError));
+  }) : super(
+         error: ErrorInfo(message: message, code: localStorageError),
+       );
 
   @override
   String getFriendlyMessage() {
@@ -19,11 +21,23 @@ class LocalStorageError extends BaseError {
   AppError transform() {
     switch (error.code) {
       case 1:
-        return AppError(error: error, cause: cause, type: ErrorType.LOCAL_STORAGE_EMPTY);
+        return AppError(
+          error: error,
+          cause: cause,
+          type: ErrorType.LOCAL_STORAGE_EMPTY,
+        );
       case 2:
-        return AppError(error: error, cause: cause, type: ErrorType.LOCAL_STORAGE_EMPTY);
+        return AppError(
+          error: error,
+          cause: cause,
+          type: ErrorType.LOCAL_STORAGE_EMPTY,
+        );
       default:
-        return AppError(error: error, cause: cause, type: ErrorType.LOCAL_STORAGE_EMPTY);
+        return AppError(
+          error: error,
+          cause: cause,
+          type: ErrorType.LOCAL_STORAGE_EMPTY,
+        );
     }
   }
 }

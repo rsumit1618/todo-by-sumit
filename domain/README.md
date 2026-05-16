@@ -1,39 +1,31 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# Domain Layer
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+The domain package contains app business contracts and use cases. It should stay independent from Flutter, Dio, SQLite, and platform APIs.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+## Current Examples
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
-
-## Features
-
-TODO: List what your package can do. Maybe include images, gifs, or videos.
-
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
+```text
+entities/task_entity.dart                    Local task entity
+repository/starter_repository.dart           REST starter contract
+repository/task_repository.dart              SQLite task contract
+repository/live_update_repository.dart       REST seed contract for live updates
+usecase/get_dashboard_summary_usecase.dart   REST use case example
+usecase/get_live_updates_usecase.dart        Live update REST seed example
+usecase/create_task_usecase.dart             SQLite create example
+usecase/get_local_tasks_usecase.dart         SQLite read example
+usecase/update_task_usecase.dart             SQLite update example
+usecase/delete_task_usecase.dart             SQLite delete example
+errors/network_error.dart                    Minimal HTTP/network error mapping
 ```
 
-## Additional information
+## Adding A Use Case
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+1. Add or update an entity if business data is needed.
+2. Add a method to a repository contract.
+3. Add a use case that accepts `Params` and returns `Either<AppError, Result>`.
+4. Wire the use case in the app layer provider.
+
+Keep DTOs and local database models in `data/`; domain should expose clean business objects only.
+
+The starter intentionally keeps domain errors small. Add feature-specific error
+types only when a real feature needs them.

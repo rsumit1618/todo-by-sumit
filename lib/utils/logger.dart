@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 mixin class Logger {
-  void logger(String log){
+  void logger(String log) {
     debugPrint(log);
   }
 }

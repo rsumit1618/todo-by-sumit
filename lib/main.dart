@@ -4,11 +4,9 @@ import 'package:data/core/config/flavors.dart';
 import 'package:data/core/config/network_config.dart';
 import 'package:data/di/local_di.dart';
 import 'package:data/helper/app_local_database_helper.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_clean_architecture/firebase_options.dart';
-import 'package:flutter_clean_architecture/main/app.dart';
+import 'package:kick_stack/main/app.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() async {
@@ -16,18 +14,13 @@ void main() async {
   if (NetworkConfig.currentFlavor == ProductFlavor.dev) {
     HttpOverrides.global = AppHttpOverrides();
   }
-  if (DefaultFirebaseOptions.isConfigured) {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-  }
   final db = await AppLocalDatabase.create();
-  runApp(ProviderScope(
-    overrides: [
-      appLocalDatabaseProvider.overrideWithValue(db),
-    ],
-    child: const MyApp(),
-  ),);
+  runApp(
+    ProviderScope(
+      overrides: [appLocalDatabaseProvider.overrideWithValue(db)],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatefulWidget {
@@ -44,10 +37,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarIconBrightness: Brightness.dark,
-      statusBarColor: Colors.transparent,
-    ));
+    SystemChrome.setSystemUIOverlayStyle(
+      const SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.dark,
+        statusBarColor: Colors.transparent,
+      ),
+    );
     return App();
   }
 

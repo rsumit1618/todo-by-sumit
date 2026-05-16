@@ -63,8 +63,7 @@ class CustomPrettyDioLogger extends Interceptor {
 
     if (responseHeader) {
       final headers = {
-        for (var e in response.headers.map.entries)
-          e.key: e.value.join(',')
+        for (var e in response.headers.map.entries) e.key: e.value.join(','),
       };
       _printMap(headers, header: 'Headers');
     }
@@ -100,16 +99,13 @@ class CustomPrettyDioLogger extends Interceptor {
   // ==============================
 
   void _printRequest(RequestOptions options) {
-    _printBox(
-      'REQUEST ${options.method}',
-      options.uri.toString(),
-    );
+    _printBox('REQUEST ${options.method}', options.uri.toString());
   }
 
   void _printResponseHeader(Response response) {
     _printBox(
       'RESPONSE ${response.requestOptions.method} '
-          '${response.statusCode} ${response.statusMessage}',
+      '${response.statusCode} ${response.statusMessage}',
       response.requestOptions.uri.toString(),
     );
   }

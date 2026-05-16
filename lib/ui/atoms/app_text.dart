@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_clean_architecture/core/theme/app_colors.dart';
+import 'package:kick_stack/core/theme/app_colors.dart';
 
 class AppText extends StatelessWidget {
-
   final String text;
   final double fontSize;
   final FontWeight fontWeight;
@@ -11,14 +10,14 @@ class AppText extends StatelessWidget {
   final int? maxLines;
 
   const AppText(
-      this.text, {
-        super.key,
-        this.fontSize = 14,
-        this.fontWeight = FontWeight.w400,
-        this.color = AppColors.textPrimary,
-        this.textAlign,
-        this.maxLines,
-      });
+    this.text, {
+    super.key,
+    this.fontSize = 14,
+    this.fontWeight = FontWeight.w400,
+    this.color = AppColors.textPrimary,
+    this.textAlign,
+    this.maxLines,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +25,7 @@ class AppText extends StatelessWidget {
       text,
       textAlign: textAlign,
       maxLines: maxLines,
-      overflow: maxLines != null
-          ? TextOverflow.ellipsis
-          : null,
+      overflow: maxLines != null ? TextOverflow.ellipsis : null,
       style: TextStyle(
         fontSize: fontSize,
         fontWeight: fontWeight,

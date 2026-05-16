@@ -6,7 +6,7 @@
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 
 	<key>CFBundleDisplayName</key>
-	<string>Flutter Clean Architecture</string>
+	<string>KickStack</string>
 
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
@@ -18,7 +18,7 @@
 	<string>6.0</string>
 
 	<key>CFBundleName</key>
-	<string>Todo</string>
+	<string>KickStack</string>
 
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>

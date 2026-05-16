@@ -5,9 +5,13 @@ class ErrorInfo {
   final String description;
   final ErrorColor? color;
 
-  ErrorInfo({required this.message,this.content='', this.code, this.description= '',this.color});
+  ErrorInfo({
+    required this.message,
+    this.content = '',
+    this.code,
+    this.description = '',
+    this.color,
+  });
+}
 
-}
-enum ErrorColor{
-  red,orange;
-}
+enum ErrorColor { red, orange }

@@ -4,16 +4,17 @@ import 'flavors.dart';
 
 class NetworkConfig {
   static const ProductFlavor currentFlavor = ProductFlavor.dev;
-  static const String _baseUrl = 'https://social-backend-qrfn.onrender.com';
+  static const String _baseUrl = 'https://api.example.com';
+  static const String _webSocketUrl = 'wss://api.example.com/ws/v1/live-updates';
 
-  static String get projectId {
+  static List<String> get certificateFingerprints {
     switch (currentFlavor) {
       case ProductFlavor.dev:
-        return "your-firebase-project-id";
+        return const [];
       case ProductFlavor.uat:
-        return "your-firebase-project-id";
+        return const ["REPLACE_WITH_UAT_SHA256_FINGERPRINT"];
       case ProductFlavor.prod:
-        return "your-firebase-project-id";
+        return const ["REPLACE_WITH_PROD_SHA256_FINGERPRINT"];
     }
   }
 
@@ -25,6 +26,17 @@ class NetworkConfig {
         return _baseUrl;
       case ProductFlavor.prod:
         return _baseUrl;
+    }
+  }
+
+  static String get webSocketUrl {
+    switch (currentFlavor) {
+      case ProductFlavor.dev:
+        return _webSocketUrl;
+      case ProductFlavor.uat:
+        return _webSocketUrl;
+      case ProductFlavor.prod:
+        return _webSocketUrl;
     }
   }
 }

@@ -11,26 +11,26 @@
 
 The package ids are:
 
-- dev: `com.sr.todo.dev`
-- uat: `com.sr.todo.uat`
-- prod: `com.sr.todo`
+- dev: `com.sr.kickstack.dev`
+- uat: `com.sr.kickstack.uat`
+- prod: `com.sr.kickstack`
 
 Rules:
 
-- Android `namespace` stays `com.sr.todo`.
-- Base `applicationId` stays `com.sr.todo`.
+- Android `namespace` stays `com.sr.kickstack`.
+- Base `applicationId` stays `com.sr.kickstack`.
 - `dev` uses `applicationIdSuffix ".dev"`.
 - `uat` uses `applicationIdSuffix ".uat"`.
 - `prod` has no suffix.
-- `MainActivity.kt` package declaration stays `com.sr.todo`.
+- `MainActivity.kt` package declaration stays `com.sr.kickstack`.
 
 ## iOS Bundle Identifiers
 
 The bundle identifiers are:
 
-- dev: `com.sr.todo.dev`
-- uat: `com.sr.todo.uat`
-- prod: `com.sr.todo`
+- dev: `com.sr.kickstack.dev`
+- uat: `com.sr.kickstack.uat`
+- prod: `com.sr.kickstack`
 
 Rules:
 
