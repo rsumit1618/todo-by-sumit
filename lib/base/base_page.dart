@@ -6,8 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:kick_stack/base/base_page_view_model.dart';
 import 'package:kick_stack/base/base_widget.dart';
 import 'package:kick_stack/core/theme/app_colors.dart';
-import 'package:kick_stack/di/view_model_provider/app/app_module.dart';
-import 'package:kick_stack/main/app_view_model.dart';
+import 'package:kick_stack/ui/components/streams/app_stream_listner.dart';
 import 'package:flutter_riverpod/misc.dart';
 
 abstract class BasePage<VM extends BasePageViewModel> extends StatefulWidget {
@@ -90,48 +89,62 @@ abstract class BaseStatefulPage<
 
   /// Actual Screen which load scaffold and load UI
   Widget _getLayout() {
-    return BaseWidget<AppViewModel>(
-      providerBase: appViewModel,
-      onModelReady: (model) {},
-      builder: (context, appModel, child) {
-        return BaseWidget<VM>(
-          providerBase: provideBase(),
-          onModelReady: _onBaseModelReady,
-          builder: (BuildContext context, VM? model, Widget? child) {
-            final scaffold = MediaQuery.removePadding(
-              context: context,
-              removeTop: true,
-              child: Scaffold(
-                key: _scaffoldKey,
-                backgroundColor: scaffoldBackgroundColor(),
-                appBar: buildAppbar(),
-                extendBodyBehindAppBar: extendBodyBehindAppBar(),
-                body: SizedBox.expand(
-                  child: _buildScaffoldBody(context, model!),
-                ),
-                drawer: buildDrawer(),
-                drawerEnableOpenDragGesture: drawerEnableOpenDragGesture(),
-                bottomNavigationBar: buildBottomNavigationBar(),
-                bottomSheet: buildBottomSheet(),
-                resizeToAvoidBottomInset: true,
-              ),
-            );
+    return BaseWidget<VM>(
+      providerBase: provideBase(),
+      onModelReady: _onBaseModelReady,
+      builder: (BuildContext context, VM? model, Widget? child) {
+        final scaffold = MediaQuery.removePadding(
+          context: context,
+          removeTop: true,
+          child: Scaffold(
+            key: _scaffoldKey,
+            backgroundColor: scaffoldBackgroundColor(),
+            appBar: buildAppbar(),
+            extendBodyBehindAppBar: extendBodyBehindAppBar(),
+            body: SizedBox.expand(child: _buildScaffoldBody(context, model!)),
+            drawer: buildDrawer(),
+            drawerEnableOpenDragGesture: drawerEnableOpenDragGesture(),
+            bottomNavigationBar: buildBottomNavigationBar(),
+            bottomSheet: buildBottomSheet(),
+            resizeToAvoidBottomInset: true,
+          ),
+        );
 
-            if (!willPopPage()) {
-              return PopScope(
+        final page = !willPopPage()
+            ? PopScope(
                 canPop: false,
                 onPopInvokedWithResult: (didPop, result) async {
                   await onBackPressed(param: result);
                 },
                 child: scaffold,
-              );
-            }
+              )
+            : scaffold;
 
-            return scaffold;
-          },
+        return AppStreamListener<UiEvent>(
+          stream: model.uiEventStream,
+          onData: _handleUiEvent,
+          child: page,
         );
       },
     );
+  }
+
+  void _handleUiEvent(UiEvent event) {
+    final message = switch (event.type) {
+      UiEventType.error => event.error?.error.message ?? '',
+      UiEventType.toast => event.message ?? '',
+      UiEventType.success =>
+        event.success?.desc.isNotEmpty == true
+            ? event.success!.desc
+            : event.success?.title ?? '',
+      UiEventType.stringError => event.stringError?.message ?? '',
+    };
+
+    if (message.isEmpty || !mounted) return;
+
+    ScaffoldMessenger.of(context)
+      ..hideCurrentSnackBar()
+      ..showSnackBar(SnackBar(content: Text(message)));
   }
 
   //by default back button disable
@@ -194,7 +207,6 @@ abstract class BaseStatefulPage<
     return buildView(context, model);
   }
 
-  @mustCallSuper
   Widget buildView(BuildContext context, VM model);
 
   void _onBaseModelReady(VM model) {

@@ -78,7 +78,7 @@ class TaskHomePageViewModel extends BasePageViewModel {
       params,
       createCall: () => _getLocalTasksUseCase.execute(params: params),
     ).asFlow().listen((event) {
-      updateLoader();
+      setLoading(event.status == Status.LOADING);
       _localTasksResponse.safeAdd(event);
       if (event.status == Status.ERROR && event.appError != null) {
         showToastWithError(event.appError!);
@@ -91,7 +91,7 @@ class TaskHomePageViewModel extends BasePageViewModel {
       params,
       createCall: () => _createTaskUseCase.execute(params: params),
     ).asFlow().listen((event) {
-      updateLoader();
+      setLoading(event.status == Status.LOADING);
       _createTaskResponse.safeAdd(event);
       if (event.status == Status.SUCCESS) {
         getLocalTasks();
@@ -107,7 +107,7 @@ class TaskHomePageViewModel extends BasePageViewModel {
       params,
       createCall: () => _updateTaskUseCase.execute(params: params),
     ).asFlow().listen((event) {
-      updateLoader();
+      setLoading(event.status == Status.LOADING);
       if (event.status == Status.SUCCESS) {
         getLocalTasks();
       }
@@ -122,7 +122,7 @@ class TaskHomePageViewModel extends BasePageViewModel {
       params,
       createCall: () => _deleteTaskUseCase.execute(params: params),
     ).asFlow().listen((event) {
-      updateLoader();
+      setLoading(event.status == Status.LOADING);
       if (event.status == Status.SUCCESS) {
         getLocalTasks();
       }

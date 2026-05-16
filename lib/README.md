@@ -24,6 +24,43 @@ ui/components/streams                AppStreamBuilder and stream listeners
 ui/components/surfaces               Card-style containers
 ```
 
+## Company Page Standard
+
+Every production screen should follow this shape:
+
+```text
+FeaturePage
+-> FeaturePageView
+-> FeaturePageViewModel
+-> UseCase
+-> Repository contract
+-> Repository implementation
+-> DataSource
+```
+
+Use `FeaturePage` for route/scaffold configuration only. Use
+`FeaturePageView` for widgets only. Put state, API calls, local DB calls, and
+screen decisions in `FeaturePageViewModel`.
+
+The base layer provides the standard lifecycle:
+
+- `BasePage` owns scaffold, pop behavior, system UI, and standard UI events.
+- `BaseWidget` connects Riverpod providers to view models and calls
+  `onModelReady` once after the first frame.
+- `BasePageViewWidget` keeps page views consistent with the company
+  page/view/view-model split.
+- `BasePageViewModel` exposes loading state and one standard `UiEvent` stream
+  for toast, success, string error, and app error messages.
+
+For new view models, prefer explicit loader calls:
+
+```dart
+setLoading(event.status == Status.LOADING);
+```
+
+Avoid the old toggle-style `updateLoader()` in new code. It remains only for
+backward compatibility.
+
 ## UI Rules
 
 - Use `S.of(context)` for visible text.

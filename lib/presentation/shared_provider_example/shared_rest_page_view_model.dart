@@ -38,7 +38,7 @@ class SharedRestPageViewModel extends BasePageViewModel {
       params,
       createCall: () => _getDashboardSummaryUseCase.execute(params: params),
     ).asFlow().listen((event) {
-      updateLoader();
+      setLoading(event.status == Status.LOADING);
       _dashboardResponse.safeAdd(event);
 
       if (event.status == Status.SUCCESS) {

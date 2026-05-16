@@ -55,7 +55,7 @@ class WebSocketExamplePageViewModel extends BasePageViewModel {
       params,
       createCall: () => _getLiveUpdatesUseCase.execute(params: params),
     ).asFlow().listen((event) {
-      updateLoader();
+      setLoading(event.status == Status.LOADING);
       if (event.status == Status.SUCCESS && _items.value.isEmpty) {
         final data = event.data ?? const [];
         _items.safeAdd(data.isEmpty ? _seedItems() : data);
