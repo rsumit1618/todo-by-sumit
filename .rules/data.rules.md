@@ -2,12 +2,12 @@
 
 ## Purpose
 
-The `data` package implements storage, network, Firebase, mapping, and repository contracts.
+The `data` package implements storage, network, mapping, and repository contracts.
 
 ## Models
 
 - Local database models live under `data/lib/models/local`.
-- Remote/API/Firestore DTOs live under `data/lib/models/remote`.
+- Remote/API DTOs live under `data/lib/models/remote`.
 - DTOs may use `json_annotation`.
 - DTOs must map to and from domain entities.
 - Never return DTOs from domain repository contracts.
@@ -17,8 +17,8 @@ The `data` package implements storage, network, Firebase, mapping, and repositor
 - Data source interfaces live under `data/lib/source/<feature>/<type>`.
 - Implementations should be named `<Feature><Type>DataSourceImpl`.
 - Local data sources handle SQLite.
-- Remote data sources handle Firestore/Firebase.
-- Network data sources handle REST/Dio/Retrofit.
+- Remote/network data sources handle REST/Dio/Retrofit.
+- Firebase data sources should be added only when a real Firebase feature is requested.
 
 ## SQLite
 
@@ -27,11 +27,12 @@ The `data` package implements storage, network, Firebase, mapping, and repositor
 - Use local data sources for queries and writes.
 - Do not open database connections in view models or widgets.
 
-## Firestore
+## Firebase
 
-- Firestore calls belong in Firestore data sources or services.
-- Keep collection paths centralized in the Firestore data source.
-- The same Firebase project may be used for all flavors, but app ids and bundle ids must still match each flavor.
+- Firebase repository/database code is not part of the active starter.
+- Keep `google-services.json` and `firebase_options.dart` only as placeholders.
+- Add Firebase Auth, Firestore, Analytics, Messaging, or Storage code only when requested.
+- Firebase calls must live in data sources or services, never in widgets or view models.
 
 ## REST
 

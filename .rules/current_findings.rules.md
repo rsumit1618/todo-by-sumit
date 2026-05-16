@@ -1,32 +1,26 @@
 # Current Architecture Findings
 
-These are existing issues or risks observed while analyzing the project. Treat this file as a cleanup backlog, not as required behavior for new features.
+Treat this file as a cleanup backlog and project context, not as required
+behavior for new features.
 
-## High Priority
+## Current Standard
 
-- `UserRepositoryImpl` still has unimplemented local DB and storage methods. Any code path calling them will throw.
-- `UserRepositoryDsImpl` has methods that throw `UnimplementedError`.
-- `GetUserFromNetworkUseCase` calls `getUserNameFromLocalNetwork()`, while the current implementation internally calls a local DB datasource method name. The naming is misleading.
-- Firebase Auth and Firestore providers require `Firebase.initializeApp()` before use. Guest/local KickStack flows were adjusted to be lazy, and future guest features should follow that pattern.
+- KickStack now uses the company `Page -> PageView -> PageViewModel` pattern.
+- Firebase is configuration-only until a real Firebase feature is requested.
+- Starter examples show REST, SQLite, shared provider state, and WebSocket live updates.
+- Network errors are intentionally minimal and HTTP-focused.
+- Shared UI lives under `lib/ui/components`.
 
-## Medium Priority
+## Watch Items
 
-- `ApiService.g.dart` is generated code but was manually extended for prepared KickStack REST endpoints. Regenerating Retrofit may overwrite it unless `build_runner` is run after keeping `api_service.dart` correct.
-- `data/lib/di/usecase_di.dart` appears unused and contains only commented examples.
-- `data/lib/remote/firebase_service.dart` is empty.
-- Some app imports depend on packages that are transitive through `data`; direct root dependencies were added for common cases, but future imports should be checked.
 - `NetworkConfig.currentFlavor` is a compile-time constant set to `dev`; Android/iOS build flavors do not currently switch this Dart value by themselves.
+- Generated localization files are maintained in the repo. If localization tooling is added later, regenerate them from `lib/l10n/intl_en.arb`.
+- `BasePageViewWidget` uses a custom `ComponentElement`. This is part of the company standard and should be changed only deliberately.
+- Example screens should be removed once a real project has its own production flows.
 
-## Low Priority / Lint Cleanup
+## AI Agent Notes
 
-- Many existing enum constants use uppercase names and trigger lint info.
-- Several unused imports and unused variables exist in older files.
-- Generated localization files import `intl`; keep `intl` as a direct app dependency.
-- The app uses a custom `BasePageViewWidget`/`DataProviderElement` pattern. It works, but it is uncommon and should be changed only deliberately.
-
-## KickStack Feature Notes
-
-- Guest KickStacks are stored locally in SQLite.
-- Email/password and Google login are wired through domain use cases and data repositories.
-- Sync uploads local KickStacks to Firestore under `users/{userId}/KickStacks`.
-- REST KickStack endpoints are prepared in `ApiService` and `KickStackNetworkDataSource`, but the active home flow does not use REST yet.
+- Read `AGENTS.md` before changing code.
+- Run generation only when generated files are affected.
+- Do not run build, test, or analyze unless requested.
+- Keep docs updated when architecture or setup changes.

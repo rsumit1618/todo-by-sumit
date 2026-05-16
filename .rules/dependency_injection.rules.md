@@ -3,9 +3,9 @@
 ## Provider Locations
 
 - Network providers: `data/lib/di/network_di.dart`
-- Firebase providers: `data/lib/di/firebase_di.dart`
+- Firebase providers: add `data/lib/di/firebase_di.dart` only when a real Firebase feature is requested.
 - Local providers: `data/lib/di/local_di.dart`
-- Data source providers: `data/lib/di/datasource_di.dart`
+- Data source providers: keep close to `network_di.dart`, `local_di.dart`, or a dedicated data source DI file when the project grows.
 - Repository providers: `data/lib/di/repository_di.dart`
 - Use case providers: `lib/di/usecase_provider/usecase_provider.dart`
 - View model providers: `lib/di/view_model_provider/<feature>`
@@ -23,7 +23,7 @@
 
 ## Lazy Dependencies
 
-- If Firebase is not needed for guest screens, do not read Firebase providers during guest screen construction.
+- If optional remote/Firebase services are not needed for local screens, do not read those providers during local screen construction.
 - Prefer passing `() => ref.read(remoteProvider)` callbacks where remote work is optional.
 
 ## Do Not

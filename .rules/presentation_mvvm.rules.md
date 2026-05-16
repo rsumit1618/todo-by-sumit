@@ -28,12 +28,14 @@ Each feature screen should follow the existing pattern:
 - View models depend on use cases, not repositories or data sources.
 - View models own UI state such as loading, messages, selected input, and screen lists.
 - View models should expose simple methods for UI actions.
-- View models should call `notifyListeners()` after state changes.
-- Keep Firebase/Auth/Firestore construction lazy when the screen supports guest mode.
+- View models should expose streams/state consumed by the page view.
+- Prefer `setLoading(event.status == Status.LOADING)` for request loading.
+- Emit user-visible messages through `BasePageViewModel` UI event helpers.
+- Keep optional remote/Firebase construction lazy when the screen supports local/offline mode.
 
 ## Base Classes
 
 - `BaseViewModel` extends `ChangeNotifier`.
-- `BasePageViewModel` adds loading/toast/error streams.
+- `BasePageViewModel` adds loading state and a standard `UiEvent` stream.
 - `BaseWidget` watches a Riverpod provider and gives the model to builders.
-- `BaseStatefulPage` composes app-level model, page model, scaffold, and page view.
+- `BaseStatefulPage` composes page model, scaffold, UI events, and page view.

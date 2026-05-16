@@ -1,4 +1,4 @@
-# Routing, Flavor, and Firebase Rules
+# Routing, Flavor, and Firebase Placeholder Rules
 
 ## Routing
 
@@ -37,14 +37,15 @@ Rules:
 - Keep matching Xcode schemes: `dev`, `uat`, `prod`.
 - Keep matching build configurations: `Debug-dev`, `Release-dev`, `Profile-dev`, etc.
 
-## Firebase
+## Firebase Placeholders
 
-- All environments currently use the same Firebase project.
+- Firebase is configuration-only in the active starter.
 - Android flavor-specific `google-services.json` files live in:
   - `android/app/src/dev/google-services.json`
   - `android/app/src/uat/google-services.json`
   - `android/app/src/prod/google-services.json`
 - Do not keep a root `android/app/google-services.json` if it contains unrelated package clients.
 - Flutter Firebase options live in `lib/firebase_options.dart`.
-- Initialize Firebase before using Auth/Firestore.
-- Guest/local-only flows should not require Firebase initialization.
+- Do not add Firebase Auth, Firestore, Messaging, Storage, Analytics, or repository code unless requested.
+- Initialize Firebase before using any future Firebase feature.
+- Local-only flows should not require Firebase initialization.

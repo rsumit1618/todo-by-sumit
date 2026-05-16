@@ -6,7 +6,8 @@
 - `data` may import from `domain`.
 - `lib` presentation may import from `domain` and DI providers exposed by `data`.
 - Business rules belong in `domain/usecase`, not in Flutter widgets.
-- Platform, Firebase, SQLite, REST, and plugin calls belong in `data`, not `domain`.
+- Platform, SQLite, REST, secure storage, and plugin calls belong in `data`, not `domain`.
+- Firebase code should remain configuration-only unless a real Firebase feature is requested.
 
 ## Feature Slice Pattern
 
@@ -26,7 +27,7 @@ For a new feature, add matching files by layer:
 - Repository methods should return `Either<BaseErrorSubtype, T>`.
 - Use `LocalError` for SQLite/local database failures.
 - Use `LocalStorageError` for secure storage failures.
-- Use `NetworkError` for REST/Firebase/Firestore/auth failures.
+- Use `NetworkError` for REST/auth/network failures.
 - Do not throw from repositories for expected failures.
 
 ## Do Not
@@ -35,3 +36,4 @@ For a new feature, add matching files by layer:
 - Do not import data models into `domain`.
 - Do not place UI state inside repositories.
 - Do not create a second architecture style for new features.
+- Do not add Firebase repositories, Firestore data sources, or push notification code unless requested.

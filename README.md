@@ -34,9 +34,29 @@ domain -> no Flutter app or data dependency
 
 Layer guides:
 
+- [Full architecture guide](docs/ARCHITECTURE.md)
+- [Getting started from this starter](docs/GETTING_STARTED.md)
+- [Feature guide](docs/FEATURE_GUIDE.md)
+- [AI agent rules](AGENTS.md)
+- [AI prompts](docs/AI_PROMPTS.md)
+- [AI review checklist](docs/AI_REVIEW_CHECKLIST.md)
+- [Architecture diagrams](docs/DIAGRAMS.md)
 - [App layer](lib/README.md)
 - [Domain layer](domain/README.md)
 - [Data layer](data/README.md)
+
+## AI-Assisted Development
+
+Before using any AI coding tool with this project, point it to:
+
+```text
+AGENTS.md
+docs/ARCHITECTURE.md
+.rules/README.md
+```
+
+The agent must verify the rules before changing code. Prompt templates are in
+`docs/AI_PROMPTS.md`.
 
 ## Starter Screens
 

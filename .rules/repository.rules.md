@@ -19,17 +19,16 @@ Repositories must not:
 
 - Hold widget state.
 - Know about routes, pages, or controllers.
-- Return Firebase/Dio/SQLite-specific types.
+- Return Firebase/Dio/SQLite/plugin-specific types.
 - Throw expected data errors.
 
-## Offline-First KickStack Rules
+## Local-First Rules
 
-- Guest KickStack CRUD uses local SQLite.
-- Firestore must not be constructed or called for guest-only local reads.
-- Sync requires a logged-in user id.
-- Local records should be marked unsynced after local edits.
-- Sync should upload local KickStacks, then refresh local storage from Firestore.
+- Local CRUD uses SQLite through local data sources.
+- Local records may include sync flags when a real sync feature exists.
+- Sync behavior should be explicit in use cases and repositories.
+- Do not construct remote/Firebase dependencies for local-only flows.
 
 ## Lazy Provider Rule
 
-If a repository supports both local and Firebase/remote behavior, remote providers should be lazy when possible. This prevents guest/offline flows from failing because Firebase is not initialized yet.
+If a repository supports optional remote behavior, remote providers should be lazy when possible. This prevents local/offline flows from failing because optional services are not configured.
